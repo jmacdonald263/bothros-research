@@ -1,56 +1,63 @@
-# Classifier-as-oracle — the pure sign-ID ceiling, and a first for Aegean syllabaries
+# Classifier-as-oracle — the pure sign-ID ceiling, and the memorisation gap laid bare
 
-**Register: matches.** Strip away detection error — feed the classifier *perfect*
-gold-box / human-traced sign crops — and ask: how often does it name the sign correctly?
-This is the classification **ceiling**, the number a researcher needs to separate "the
-classifier is wrong" from "the detector missed the box." It is also, as far as we know, the
-first published sign-classification accuracy for Linear A and Linear B against gold crops.
+**Register: matches.** Feed the classifier *perfect* gold-box / human-traced sign crops and
+ask how often it names the sign correctly — the classification **ceiling**, isolating
+classifier quality from detector error. As far as we know this is the first published
+gold-crop sign-classification accuracy for Linear A and Linear B. It is also the one
+finding where the **released full-data** weights and the **held-out benchmark** weights
+must both be shown, because the gap between them *is* the memorisation effect — measured.
 
-## Result (shipped benchmark weights, held-out)
+## Result — both published weight sets
 
-| script | crops (tablets) | **Top-1** | Top-5 | 95% CI (Top-1) |
+| script | crops (tablets) | RELEASE (full-data) Top-1 | BENCHMARK (held-out) Top-1 | gap |
 |---|---|---|---|---|
-| **Linear A** | 87 pairs (52) | **79.3%** | 83.9% | Wilson [69.6, 86.5] · cluster [70.0, 89.2] |
-| **Linear B** | 904 (64) | **64.5%** | 73.8% | cluster [53.5, 73.8] |
+| **Linear A** | 87 (52) | **89.7%** (78/87) · top-5 94.3% | **79.3%** (CI [69.6, 86.5]) · top-5 83.9% | +10.4 |
+| **Linear B** | 904 (64) | **86.7%** (784/904, CI [81.1, 90.8]) · top-5 88.7% | **64.5%** (CI [53.5, 73.8]) · top-5 73.8% | +22.2 |
 
-- **LA**: `la_classifier.pth` on the held-out oracle GT (gold boxes).
-- **LB**: `lb_classifier.pth` on **904 tight human-traced imagemap crops** (the honest
-  crop set — see the trap below).
+Both are the **weights published on Hugging Face**: `*_classifier_release.pth` (full-data,
+the model a user actually downloads and runs) and `*_classifier.pth` (held-out-safe).
 
-For loose context, DeepScribe (Williams et al.) reports ≈74% top-1 for Elamite cuneiform
-sign classification. Our LA gold-crop top-1 (79.3%) is in that range; LB (64.5%) below it.
-This is **not** a head-to-head — different script, corpus, and class count — only a sanity
-check that the Aegean classifiers are competitive with the state of the art for an
-analogous ancient-sign-ID task. The reportable contribution is that *no such number existed
-for LA/LB before*; the comparison is decoration, not the claim.
+**Read the two columns correctly — this finding is the one place the distinction bites.**
+The oracle task is literally "predict the label of *this* crop," and the release model was
+trained on the full corpus *including these exact held-out crops*. So its 89.7% / 86.7% is
+partly **reciting memorised answers** — it is the right number for "how good is the deployed
+model on tablets it has seen," and an **over-estimate** for a researcher's genuinely novel
+photograph. For novel input the honest estimate is the **held-out** column (79.3% / 64.5%),
+where the eval crops were withheld from training. A real upload sits between, leaning toward
+held-out the more novel it is.
 
-## The trap we did not fall into (pre-declared)
+(This is *why* the other findings here — [cross-script](cross_script_cognates.md),
+[scribal hands](scribal_hands.md) — can feature the release weights without the same
+caveat: their tasks are not "predict the trained-on label," so the contamination is
+indirect. The oracle is the strict case, so it carries both numbers explicitly.)
 
-There are two "LB oracle" numbers in the project, and only one is honest:
+## DeepScribe context (loose)
 
-- **64.5%** — `eval_clean_oracle_crops.py` on **tight, human-traced** crops (904). Reported.
-- **22.3%** — `eval_classifier_oracle.py` on loose detector-aligned crops
-  (`lb_clean_eval_v1`). **Not** an oracle of the classifier — it folds in crop-box slop, so
-  it understates classifier quality badly.
+DeepScribe (Williams et al.) reports ≈74% top-1 for Elamite cuneiform sign classification.
+LA gold-crop top-1 is in that range on either weight set; the reportable point is that **no
+such number existed for LA/LB before**, not a head-to-head (different script/corpus/classes).
 
-We report 64.5% and name the 22.3% explicitly so no future reader cites the wrong one.
-([Why this matters](../METHODOLOGY.md): a number is only a finding if you can say exactly
-how it was computed.)
+## The crop trap we did not fall into (pre-declared)
 
-## The leakage line (why these are the *benchmark*, not the release, weights)
+Two "LB oracle" numbers exist; only the tight-crop one is a real oracle:
 
-The full-data **release** classifiers score this same oracle far higher — LA ≈90%, LB
-≈87% — but they were trained on the held-out tablets, so that is **memorisation, not
-skill**. The honest ceiling is the held-out benchmark figure above. This is the same
-discipline applied to the [demo-toggle decision](../../bothros/docs/DEMO_TOGGLE_DECISION.md):
-release numbers look better and mean less.
+- **`eval_clean_oracle_crops.py` on 904 tight human-traced crops** — reported above
+  (release 86.7% / benchmark 64.5%).
+- **`eval_classifier_oracle.py` on loose detector-aligned crops** (`lb_clean_eval_v1`) gives
+  ~22% for the benchmark weights — that folds in crop-box slop and is **not** a classifier
+  oracle. Named here so no future reader cites it by mistake.
 
 ## Reproduce
 
 ```bash
-# LB (regenerates 64.5%):
+# LB, both weight sets (904 tight crops):
 PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.6 PYTORCH_MPS_LOW_WATERMARK_RATIO=0.4 \
   /opt/homebrew/bin/python3.12 src/eval_clean_oracle_crops.py \
-    --classifier release/weights/lb_classifier.pth
-# LA (79.3% already persisted): data/oracle_la_clean_v1_heldout.json (meta.top1)
+    --classifier release/weights/lb_classifier_release.pth   # 86.7%  (release)
+#   --classifier release/weights/lb_classifier.pth           # 64.5%  (benchmark)
+# LA, both weight sets (held-out oracle GT):
+  /opt/homebrew/bin/python3.12 src/eval_classifier_oracle.py \
+    --classifier release/weights/la_classifier_release.pth \
+    --gt data/la_clean_heldout_oracle.json                   # 89.7%  (release)
+#   --classifier release/weights/la_classifier.pth ...       # 79.3%  (benchmark)
 ```
