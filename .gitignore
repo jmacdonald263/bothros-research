@@ -1,0 +1,13 @@
+# No data, weights, or embeddings in this repo — findings (markdown) only.
+# Numbers are reproduced from the main `bothros` repo's scripts; nothing here ships data.
+data/
+*.npz
+*.npy
+*.pth
+*.pt
+*.png
+*.jpg
+*.jpeg
+*.db
+__pycache__/
+.DS_Store
