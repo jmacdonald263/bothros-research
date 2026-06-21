@@ -12,14 +12,15 @@ memorise the test tablets; using them here would inflate the numbers, as #6 docu
 |---|---|---|---|---|
 | 1 | **Cross-script LA↔LB cognates** | matches + extends | `la_shared` **secure P@5 = 100%** (11/11), P@1 = 90.9%; all-54 P@5 = 94.4%; ImageNet baseline 18.5% (null) | ✅ [written](cross_script_cognates.md) — reproduces prior, + full tiers & baseline |
 | 2 | **Scribal hands** (Pylos, Mantel vs Skelton) | matches | Mantel **r = 0.674, p = 0.036** (n=8 hands) | ✅ [written](scribal_hands.md) — reproduces exactly |
-| 3 | **Sign structure** (allograph / logogram-vs-syllabogram / numerals) | extends | partly in #4 (LA syllabary β=0.236 vs whole-corpus 0.45; community→type NMI 0.11) | ⏳ remaining (own page TBD) |
+| 3 | **Sign structure** (allograph / logogram-vs-syllabogram / numerals) | extends + matches + dead-end | fractions bind to commodity logograms (154 vs 76); bigrams recover *ku-ro* "total"; syllabary β=0.236 (near-closed); allograph detection **frequency-confounded (−0.76) → inconclusive** | ✅ [written](sign_structure.md) — model-free |
 | 4 | **Distributional / sequential structure** (entropy, Heaps, network) | extends + self-negative | CH>LB>LA on all 3 methods, but ranks **formulaicity not linguisticality** (LB control); LA β in NL band | ✅ [written](distributional_structure.md) — model-free, leakage-immune |
-| 5 | **Restoration** (n-gram / transformer / contextual parallels) | extends | built; some never fully evaluated | ⏳ remaining |
+| 5 | **Restoration** (n-gram / transformer / contextual parallels) | extends + LA negative | LB masked-sign **top-1 25.5% / top-5 45.2%** (vs 0.08% chance); n-gram ≈ Transformer; **LA near-floor 4.4%** | ✅ [written](restoration.md) |
 | 6 | **Classifier-as-oracle** (DeepScribe context) | matches | **LA 79.3%** top-1 (CI [70,89]) · **LB 64.5%** (CI [53.5,73.8]); avoided the 22.3% trap; release inflates to 90/87 = memorisation | ✅ [written](classifier_oracle.md) |
 | 7 | **NEGATIVE: Phaistos placement** | honesty | retracted 2026-05-27 (rendering-style confound) | ✅ [written](NEGATIVE_phaistos.md) — the centrepiece |
 
-**5 of 7 themes written**, all three honest registers covered (matches #1/#2/#6, extends
-#1/#4, negative #7 + the self-negative inside #4). #3 and #5 remain.
+**All 7 themes written.** Three honest registers covered — matches (#1/#2/#3/#6), extends
+(#1/#3/#4/#5), negatives shipped (#7 Phaistos + self-negatives inside #3 allograph, #4
+formulaicity ceiling, #5 LA floor). Every anchored claim has GT + a baseline/null.
 
 ## Re-run protocol (per `../METHODOLOGY.md`)
 
