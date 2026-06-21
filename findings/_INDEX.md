@@ -13,7 +13,7 @@ We report each as measured.
 | # | Theme | Register | Result (release / benchmark where both apply) | Status |
 |---|---|---|---|---|
 | 1 | **Cross-script LA↔LB cognates** | matches + extends | `la_shared` **secure P@5 = 100%** on BOTH; P@1 secure 81.8% (rel) / 90.9% (bench); two nulls fail (ImageNet 18.5%, **DINOv3 0%**) | ✅ [written](cross_script_cognates.md) — both weights + DINOv3 null |
-| 2 | **Scribal hands** (Pylos, Mantel vs Skelton) | matches | Mantel **r = 0.684, p = 0.020** (release) / r = 0.649, p = 0.030 (bench), n=8 | ✅ [written](scribal_hands.md) — both weights |
+| 2 | **Scribal hands** (Pylos Mantel + Knossos hand-ID, LB+LA) | matches | Pylos Mantel **r=0.684/0.649**; **LA Knossos hand-ID top-1 44.7%/42.6%** (2.5× baseline, NMI ≈0.49); LB Knossos weak (22.4%) | ✅ [written](scribal_hands.md) — both weights, 2 sites, LA+LB |
 | 3 | **Sign structure** (allograph / logogram-vs-syllabogram / numerals) | extends + matches + dead-end | fractions→commodity logograms (154 vs 76); bigrams recover *ku-ro* "total"; syllabary β=0.236; allograph **freq-confounded (−0.76) → inconclusive** | ✅ [written](sign_structure.md) — model-free |
 | 4 | **Distributional / sequential structure** (entropy, Heaps, network) | extends + self-negative | CH>LB>LA on all 3 methods, but ranks **formulaicity not linguisticality** (LB control) | ✅ [written](distributional_structure.md) — model-free |
 | 5 | **Restoration** (n-gram / transformer) | extends + LA negative | LB masked-sign **top-1 25.5% / top-5 45.2%** (vs 0.08% chance); **LA near-floor 4.4%** | ✅ [written](restoration.md) — model-free LM |
@@ -25,9 +25,10 @@ We report each as measured.
 negatives shipped (#7 Phaistos + DINOv3 in #1 + self-negatives in #3/#4/#5/#8). Every
 anchored claim has GT + a baseline/null.
 
-**Pending re-run on published weights:** LA Knossos hand-ID clustering (`exp4`, top-1 45.4%)
-and the qualitative contextual-parallels (`exp3`) still use older embeddings — flagged, not
-yet re-run; not reported as findings until they are.
+**All model-dependent findings now run on the published weights.** `exp4` Knossos hand-ID +
+`exp3` tablet embeddings/contextual-parallels re-run on the published release (and LA also on
+benchmark); folded into #2. The `exp3` contextual-parallel retrieval demos (qualitative, no
+GT) ran on release too — referenced as a tool in #5, not scored.
 
 ## Re-run protocol (per `../METHODOLOGY.md`)
 
