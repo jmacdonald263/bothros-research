@@ -59,10 +59,10 @@ it.
 
 ```bash
 PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.6 PYTORCH_MPS_LOW_WATERMARK_RATIO=0.4 \
-  /opt/homebrew/bin/python3.12 src/cross_script_embeddings.py            # benchmark weights
-  /opt/homebrew/bin/python3.12 src/cross_script_embeddings.py --release  # full-data weights
+  python3 src/cross_script_embeddings.py            # benchmark weights
+  python3 src/cross_script_embeddings.py --release  # full-data weights
 # -> data/cross_script_similarity_{la_classifier,la_classifier_release}__*.json
-/opt/homebrew/bin/python3.12 src/expa4_dinov3_cross_script.py             # DINOv3 baseline null
+python3 src/expa4_dinov3_cross_script.py             # DINOv3 baseline null
 ```
 
 This is scored against the 54 published correspondence pairs rather than raw cross-script

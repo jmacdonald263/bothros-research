@@ -59,8 +59,8 @@ structure ([corpus structure](distributional_structure.md)).
 ## Reproduce
 
 ```bash
-/opt/homebrew/bin/python3.12 src/exp_lda_topics.py              # LA topics
-/opt/homebrew/bin/python3.12 src/expc3_topic_model.py           # LB + LA topics
-/opt/homebrew/bin/python3.12 src/expb3_b5_dialectology.py       # site variation
-/opt/homebrew/bin/python3.12 src/exp_branching_entropy_seg.py   # word segmentation
+python3 src/exp_lda_topics.py              # LA topics
+python3 src/expc3_topic_model.py           # LB + LA topics
+python3 src/expb3_b5_dialectology.py       # site variation
+python3 src/exp_branching_entropy_seg.py   # word segmentation
 ```

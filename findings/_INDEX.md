@@ -1,6 +1,8 @@
 # Findings index
 
-Each page carries its reproduction command and a stated null / significance test.
+Each page names the script and inputs that produce its numbers (the scripts live in the
+development repo — see the [README](../README.md#reproducing)) and states its null /
+significance test.
 
 ## Primary — require the BOTHROS classifier
 

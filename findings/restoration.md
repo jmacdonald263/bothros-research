@@ -67,8 +67,8 @@ against), so it is reported as a tool, not a measured claim.
 ## Reproduce
 
 ```bash
-/opt/homebrew/bin/python3.12 src/exp1_ngram_restoration.py      # -> data/exp1_ngram_restoration.json
+python3 src/exp1_ngram_restoration.py      # -> data/exp1_ngram_restoration.json
 PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.6 PYTORCH_MPS_LOW_WATERMARK_RATIO=0.4 \
-  /opt/homebrew/bin/python3.12 src/expa2_transformer_restoration.py  # -> data/expa2_transformer_restoration.json
-/opt/homebrew/bin/python3.12 src/exp3_contextual_parallels.py   # -> data/exp3_contextual_parallels.json
+  python3 src/expa2_transformer_restoration.py  # -> data/expa2_transformer_restoration.json
+python3 src/exp3_contextual_parallels.py   # -> data/exp3_contextual_parallels.json
 ```

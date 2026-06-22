@@ -72,7 +72,7 @@ robust allographs in the current data.
 ## Reproduce
 
 ```bash
-/opt/homebrew/bin/python3.12 src/expg_numeral_fraction.py        # -> data/expg_numeral_fraction.json
-/opt/homebrew/bin/python3.12 src/exp5a_la_bigrams.py             # -> data/exp5a_la_bigrams.json
-/opt/homebrew/bin/python3.12 src/exp_distributional_allograph.py # -> data/exp_distributional_allograph.json (inconclusive)
+python3 src/expg_numeral_fraction.py        # -> data/expg_numeral_fraction.json
+python3 src/exp5a_la_bigrams.py             # -> data/exp5a_la_bigrams.json
+python3 src/exp_distributional_allograph.py # -> data/exp_distributional_allograph.json (inconclusive)
 ```

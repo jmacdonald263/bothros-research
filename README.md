@@ -71,9 +71,46 @@ drawing style. See [`METHODOLOGY.md`](METHODOLOGY.md). A larger planned piece, a
 character-based sign phylogeny, is scoped in [`PHYLOGENY_PLAN.md`](PHYLOGENY_PLAN.md) (design
 only, not yet run).
 
+## Reproducing
+
+Each finding page names the script and inputs that produce its numbers. The analysis
+scripts (`src/*.py`) live in the BOTHROS development repository and are available on
+request — they are not yet packaged here, so treat each page's reproduction command as a
+precise specification of what was run rather than a turnkey script in this repo. They run
+against three obtainable inputs:
+
+- **Weights** — the published classifiers + detector on
+  [Hugging Face](https://huggingface.co/JMacD263/linear-a-linear-b-bothros)
+  (`download_weights.py` in the [tool repo](https://github.com/jmacdonald263/bothros)).
+- **`corpus.db`** — a local SQLite corpus built from the public DĀMOS, SigLA and
+  lineara.xyz / LinearBExplorer sources via the tool repo's ingestion scripts; no
+  copyrighted images are redistributed.
+- **Ground-truth tables** — the published LA↔LB correspondence pairs and the catalogued
+  scribal-hand attributions the anchored metrics score against.
+
+`requirements.txt` lists the Python dependencies.
+
+## Scope
+
+Linear A and Linear B. Cretan Hieroglyphic appears only as a corpus-statistics control
+(it is not a released script — its pipeline evaluation is held back by train/test data
+leakage and too little available data to resolve it). Cypro-Minoan, and the planned
+Corazza 2022 replication, is parked — data-blocked: the comparable corpus (Corazza's
+Sign2Vec_d) is copyright-restricted and non-redistributable.
+
+## Acknowledgements
+
+- **Linear A** — sign boxes and the AB-code catalogue from
+  [SigLA](https://sigla.phis.me) (**Ester Salgarella & Simon Castellan**); inscription
+  images from [lineara.xyz](https://lineara.xyz) (mwenge; ultimately GORILA, Godart &
+  Olivier).
+- **Linear B** — transcriptions from [DĀMOS](https://damos.hf.uio.no) (Federico Aurora)
+  and the sign imagemap from [LinearBExplorer](https://github.com/mwenge/LinearBExplorer)
+  (mwenge).
+
 ## Licence
 
-- **Code / notebooks:** MIT.
+- **Code:** MIT (see [`LICENSE`](LICENSE)).
 - **Derived data** (correspondence tables, hand labels, derived statistics): CC BY-NC-SA 4.0,
   derived from DĀMOS, SigLA, lineara.xyz, LinearBExplorer, GORILA (research use). No
   copyrighted corpus images are included; reproductions fetch images from those sources.

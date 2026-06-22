@@ -17,6 +17,7 @@ is used** in the corpus, without any glyph-shape or phonetic information.
 
 | metric | value |
 |---|---|
+| majority-class baseline | 58.0% (98 logograms / 169) |
 | LOO accuracy | **88.2%** (95% CI [82.4, 92.2], n = 169) |
 | ROC-AUC | 0.95 |
 | macro F1 | 0.88 |
@@ -38,12 +39,14 @@ these are offered as candidates, not labels.
 - Distributional features partly encode frequency, and the two classes differ in frequency,
   so some of the signal is frequency itself — expected, not a confound to hide, but it means
   this measures "logograms and syllabograms are used differently," not a shape-based reading.
-- 169 labelled signs; the CI is the honest spread.
+- 169 labelled signs; the CI is the honest spread. The null is the 58.0% majority-class
+  rate (always predict "logogram"); 88.2% with a CI lower bound of 82.4% sits well clear of
+  it, and ROC-AUC 0.95 is threshold-independent — so the result is not a base-rate artefact.
 - Model-free: uses corpus statistics only, so the published-weights distinction does not
   apply here.
 
 ## Reproduce
 
 ```bash
-/opt/homebrew/bin/python3.12 src/exp2_logo_vs_syllab.py   # -> data/exp2_logo_vs_syllab.json
+python3 src/exp2_logo_vs_syllab.py   # -> data/exp2_logo_vs_syllab.json
 ```

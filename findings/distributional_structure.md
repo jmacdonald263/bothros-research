@@ -65,9 +65,9 @@ structural signal, not a typology.
 ## Reproduce
 
 ```bash
-/opt/homebrew/bin/python3.12 src/exp_entropy_linguisticality.py   # entropy / order signal
-/opt/homebrew/bin/python3.12 src/expb1b_corpus_size_control.py    # matched-size bootstrap
-/opt/homebrew/bin/python3.12 src/exp_heaps_inventory.py           # Heaps / Zipf
-/opt/homebrew/bin/python3.12 src/exp_sign_network.py              # directional asymmetry / modularity
-/opt/homebrew/bin/python3.12 src/expi_cooccurrence_network.py     # LA co-occurrence hubs
+python3 src/exp_entropy_linguisticality.py   # entropy / order signal
+python3 src/expb1b_corpus_size_control.py    # matched-size bootstrap
+python3 src/exp_heaps_inventory.py           # Heaps / Zipf
+python3 src/exp_sign_network.py              # directional asymmetry / modularity
+python3 src/expi_cooccurrence_network.py     # LA co-occurrence hubs
 ```

@@ -71,9 +71,9 @@ as marginal, not as a second LB win.
 ```bash
 # Pylos Mantel (vs Skelton):
 PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.6 PYTORCH_MPS_LOW_WATERMARK_RATIO=0.4 \
-  /opt/homebrew/bin/python3.12 src/expk3_pylos_mantel.py            # benchmark (labeller_v3), r=0.649
-  /opt/homebrew/bin/python3.12 src/expk3_pylos_mantel.py --release  # full-data, r=0.684
+  python3 src/expk3_pylos_mantel.py            # benchmark (labeller_v3), r=0.649
+  python3 src/expk3_pylos_mantel.py --release  # full-data, r=0.684
 # Knossos direct hand-ID (LA/LB): build tablet embeddings, then leave-one-out classify:
-  /opt/homebrew/bin/python3.12 src/exp3_contextual_parallels.py [--release] --out <npz>
-  /opt/homebrew/bin/python3.12 src/exp4_hand_clustering.py --script LA --npz <npz>  # LA 44.7%/42.6%
+  python3 src/exp3_contextual_parallels.py [--release] --out <npz>
+  python3 src/exp4_hand_clustering.py --script LA --npz <npz>  # LA 44.7%/42.6%
 ```
