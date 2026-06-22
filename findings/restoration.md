@@ -48,9 +48,14 @@ A trigram sign LM (built from the corpus, test perplexity 83) was used to rescor
 pipeline's top-5 predictions per box — sweeping the LM weight, position weight, and a
 confidence gate. Best result: per-line accuracy 0.698 → **0.701 (+0.3pp)**; higher LM
 weights make it worse. So the LM that restores masked signs at 25% in isolation does **not**
-meaningfully improve the deployed pipeline: where the classifier is already right the LM
-agrees, and where it is wrong the LM (perplexity 83) is not confident enough to override.
-Reported as a near-null, closing a built-but-never-evaluated component.
+meaningfully improve the deployed pipeline. A follow-up settled *why*, definitively: on clean
+gold crops there is **+9.7pp of rerankable headroom** (oracle top-1 65.9% → top-5 75.7%), but
+reranking the top-5 with the trigram under **teacher-forced ground-truth context** (the LM's
+best possible case) captures **0% of it and hurts at every weight** (λ=0 is optimal). The
+reason is general: a context-LM predicts a sign at ~25%, the image-classifier at ~66%, so
+blending the weaker signal only degrades — and a stronger context-LM (the Transformer, 25.5%)
+is still far below 66%. The headroom is unrecoverable by any context-only LM here; a learned
+interpolation simply learns to ignore the LM. (`src/exp_lm_rerank.py`.)
 
 ## Companion: contextual parallels (qualitative)
 
