@@ -25,6 +25,10 @@ a stated null / significance test. Themes:
   networks, topic models, with a matched-corpus-size control.
 - Sign restoration (n-gram and Transformer) and classifier gold-crop accuracy.
 
+A larger planned piece — a character-based sign phylogeny across the Aegean scripts, as the
+principled alternative to cross-script proximity — is scoped in [`PHYLOGENY_PLAN.md`](PHYLOGENY_PLAN.md)
+(design only, not yet run).
+
 ## Method and weights
 
 Model-dependent findings are run on both published weight sets and report the difference:

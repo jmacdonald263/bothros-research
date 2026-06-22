@@ -42,6 +42,16 @@ The LA corpus is an order of magnitude smaller and its sequences are looser (con
 the [corpus-structure result](distributional_structure.md)). Contextual restoration is not a
 useful tool for LA at the current corpus size.
 
+## Does the LM help end-to-end? (near-null)
+
+A trigram sign LM (built from the corpus, test perplexity 83) was used to rescore the LB
+pipeline's top-5 predictions per box — sweeping the LM weight, position weight, and a
+confidence gate. Best result: per-line accuracy 0.698 → **0.701 (+0.3pp)**; higher LM
+weights make it worse. So the LM that restores masked signs at 25% in isolation does **not**
+meaningfully improve the deployed pipeline: where the classifier is already right the LM
+agrees, and where it is wrong the LM (perplexity 83) is not confident enough to override.
+Reported as a near-null, closing a built-but-never-evaluated component.
+
 ## Companion: contextual parallels (qualitative)
 
 `exp3_contextual_parallels.py` retrieves the most *similar whole tablets* by mean sign

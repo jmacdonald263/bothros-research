@@ -26,6 +26,24 @@ The cross-script and scribal-hand findings do not carry the same caveat: their t
 "predict the trained-on label," so contamination there is indirect. The oracle is the direct
 case, so both numbers are reported.
 
+## By training frequency
+
+The overall figure is dragged down by rare signs. Stratifying the Linear A oracle by how
+often each sign appears in training:
+
+| training-frequency stratum | eval signs | benchmark top-1 | release top-1 |
+|---|---|---|---|
+| ≥20 instances | 80 | **83.8%** | 92.5% |
+| 5–19 | 3 | 66.7% | 66.7% |
+| <5 | 2 | 0% | 66.7% |
+| unseen in training | 1–2 | 0% | 0% |
+
+The ≥20-instance stratum is the comparable figure: an Old-Babylonian cuneiform ResNet-50
+(arXiv:2507.13959) reports 87.1% top-1 on its ≥20-instance signs; the benchmark LA classifier
+is 83.8% on the same footing, just below it. The `<5` stratum (0%) is the long-tail floor —
+the classifier's main weakness, and where rare-sign methods would have to improve. The
+held-out eval is small (87 signs), so the strata are directional.
+
 ## DeepScribe context
 
 DeepScribe (Williams et al.) reports ≈74% top-1 for Elamite cuneiform sign classification.
