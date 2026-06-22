@@ -1,53 +1,101 @@
-# Planned: a character-based sign phylogeny (CH → LA → LB → Cypriot)
+# Planned: a sign-level phylogeny of the Aegean scripts (CH · LA · LB · Cypro-Minoan)
 
 Status: **design only — not yet run.** This is the principled replacement for cross-script
-*proximity* placement. The retracted Phaistos attempt (see [`METHODOLOGY.md`](METHODOLOGY.md))
-failed because raw embedding distance between scripts is confounded by drawing style. A
-phylogeny built from **explicit structural characters** is falsifiable and can be controlled
-for that confound, so it is the defensible way to ask how the Aegean scripts relate by sign
-form.
+*proximity* placement (the retracted Phaistos attempt failed because raw embedding distance
+between scripts is confounded by drawing style; see [`METHODOLOGY.md`](METHODOLOGY.md)). A
+phylogeny from explicit, falsifiable characters can be controlled for that confound. The
+design below reflects the prior-art and method review.
 
-## Question
+## Novelty — framed precisely (a reviewer will know the adjacent work)
 
-Do the Bronze Age Aegean scripts — Cretan Hieroglyphic, Linear A, Linear B, Cypro-Minoan /
-Cypriot — relate by sign *form* in a way that recovers known descent, and can the model
-propose novel sign correspondences with explicit support values?
+The novelty is in the **unit of analysis**. Sorting prior work by what the tree's tips are:
 
-## Method
+- **Whole scripts as tips** (Aegean family trees from cross-script sign similarity) —
+  **already exists** (Revesz 2016/17; Daggumati & Revesz 2018–23), and is regarded as fringe
+  by mainstream Aegeanists (UPGMA clock, DNA-encoding of glyphs). **Do not claim "first tree
+  of the Aegean script family"** — and do not inherit their conclusions; cite only as the
+  pipeline to avoid.
+- **Scribal hands as tips** (within Linear B), characters = sign-form variants —
+  **exists, and is the legitimacy anchor**: Skelton 2008 (*Archaeometry*), maximum parsimony,
+  passed a known-answer test, reused as ground truth by Srivatsan et al. 2021. We extend its
+  design from scribes-as-taxa to **signs-as-taxa**.
+- **Individual signs as tips**, characters = shape features — **no instance found, any
+  script** (only a framework proposed: Pardede/Hosszú/Kovács 2026).
 
-1. **Character matrix.** Code each sign as a binary vector of structural features
-   (stroke counts, junctions, closed loops, symmetry axes, dominant orientation, presence of
-   specific sub-elements), drawn from GORILA / CHIC / SigLA facsimiles. Characters are
-   defined explicitly and published, so anyone can re-code or dispute them — unlike an opaque
-   embedding distance.
-2. **Tree inference.** Maximum parsimony plus a Bayesian Mk model (Lewis 2001) over the
-   matrix → tree with branch support (bootstrap / posterior).
-3. **Anchoring.** The 11 secure LA↔LB correspondences are the validation set: they must
-   emerge as supported sisters before any novel claim is read off the tree.
+**Defensible novel claims:** (a) first phylogeny whose tips are individual Aegean *signs*;
+(b) first sign-form tree to include **Cypro-Minoan** as a taxon; (c) first grounded in a
+learned classifier embedding rather than only hand-coded features. **Indefensible:** "first
+Aegean script tree."
 
-## Validation and controls
+## Method (network-first, anchored, validated)
 
-- **Pass condition:** the secure LA↔LB pairs recover as well-supported sisters. If they do
-  not, the character coding is inadequate and nothing downstream is reported.
-- **Homoplasy control:** down-weight common, easy strokes (a single vertical line recurs
-  everywhere; consistency index ≈ 0.1). Report per-character CI and exclude or down-weight
-  low-CI characters.
-- **"Medium tree" control:** verify the tree groups by descent, not by writing medium or by
-  the modern editor who drew the facsimile (a known confound — GORILA/CHIC drawings are
-  editorial). Code from multiple facsimile sources and check the topology is stable.
-- **Candidate vs confirmed:** novel correspondences are reported only with support values
-  and marked candidate, never as established.
+1. **Character coding — anchor to catalogue sign IDENTITY, not raw shape** (Skelton's design;
+   our defence against allograph / scribe / editor noise). Characters = structural features
+   (stroke count, junctions, closed loops, symmetry, orientation, sub-elements). Mark
+   inapplicable/contingent characters explicitly (Brazeau 2019; Tarasov 2023 — naïve "?"
+   coding makes artefacts); avoid correlated duplicate characters; unordered (Fitch) by
+   default, ordered only for genuine counts (e.g. number of strokes). A learned-embedding
+   feature set can be a *second* character source, cross-checked against the hand-coded one.
+2. **Run a network FIRST.** Given documented inter-script borrowing + a small matrix + the
+   medium confound, the honest primary object is a **NeighborNet (SplitsTree6)**; present a
+   tree only if the data are genuinely tree-like (δ-score / Q-residuals near 0). Borrowing
+   perturbs topology little (Greenhill–Currie–Gray 2009) but wrecks dates — so claim
+   topology, never dates.
+3. **Tree inference (if tree-like): Bayesian Mkv + Γ** (Lewis 2001, with the Mkv
+   ascertainment-bias correction since only variable characters are coded) in **MrBayes** —
+   the one tool giving true posterior support. Cross-check with **IQ-TREE** (ML, `MK+ASC`,
+   ultrafast bootstrap) and **parsimony with implied weighting** (TNT or phangorn), sweeping
+   the concavity constant. Report **consistency / retention indices** for homoplasy.
 
-## Inputs (mostly in hand)
+## Validation and controls (non-negotiable, in order)
 
-- Facsimiles: GORILA (LA), CHIC (CH), SigLA catalogue, LB sign tables — already used
-  elsewhere in the project.
-- Anchor set: the 54 published LA↔LB correspondences (11 secure), in `corpus.db`.
-- Tooling: standard phylogenetics (parsimony / Mk); the character coding is the new work.
+1. **Known-answer first.** Recover the published LA↔LB correspondences (the **11 secure**
+   pairs in `corpus.db` — the broader "54" set is the less-secure tier; treat the secure 11
+   as the anchor) as sisters / ancestor-descendant *before* any novel claim. If they don't
+   recover, the coding measures style, not descent — stop.
+2. **Style/medium negative control.** This confound is *documented on these exact scripts*:
+   Corazza 2022 found Cypro-Minoan clusters driven by writing *medium*, not sign identity;
+   the facsimile analogue is editor drawing convention (GORILA vs CHIC vs SigLA house style).
+   Build a parallel "nuisance" matrix coding only editor-source / substrate, and Mantel-test
+   the sign tree against it. **If the tree correlates more with style than with known descent,
+   that is the finding** — reported, not hidden.
+3. **Tree-likeness** (δ-score, Q-residuals) before committing to a tree.
+4. **Support ≠ accuracy.** Watch long-branch attraction (acute at few taxa × few characters);
+   don't interpret weak nodes; run a **permutation null** (real tree must beat permuted-state
+   noise).
 
-## Effort and risk
+## Tools (all local, no GPU)
 
-Large; high-risk. The character coding is laborious and subjective, and the homoplasy and
-medium confounds are real. It is listed here as the next substantial research piece, not a
-quick result — the smaller findings in `findings/` should be read as the validated work, and
-this as a proposal.
+MrBayes (primary, posterior support) · SplitsTree6 (NeighborNet, run first) · IQ-TREE (ML
+cross-check) · phangorn/R (open parsimony). **Not** BEAST2 (its clock/dating stack is
+overkill) and **not** DendroPy/Bio.Phylo for inference (they only read/manipulate trees).
+
+## Inputs
+
+Facsimiles GORILA (LA) / CHIC (CH) / SigLA / LB sign tables; Cypro-Minoan sign list; anchor =
+11 secure LA↔LB correspondences (`corpus.db`). The character coding is the new work.
+
+## Honest verdict
+
+**Worth doing, but only as a known-answer-validated, network-first exercise with the
+style/medium negative control.** A raw-shape tree across mixed facsimile sources is likely
+confounded — Skelton shows the validated version is not hopeless; Revesz shows the
+unvalidated version to avoid. Large effort, real risk; this is the next substantial piece,
+not a quick result.
+
+## Suggested first step
+
+Code the ~11 secure-pair signs + their nearest neighbours by hand (a few dozen signs) as a
+**pilot matrix**, run NeighborNet + Mkv, and check the known-answer + style-control on that
+small set *before* scaling to the full inventory. If the pilot fails the controls, the full
+project is not worth building.
+
+## Key references
+
+Lewis 2001 (Mk/Mkv); Wright & Hillis 2014 (Bayesian Mk beats parsimony on noisy morphology);
+Greenhill–Currie–Gray 2009 (borrowing preserves topology, not dates); Bryant & Moulton 2004
+(NeighborNet); **Skelton 2008** (LB scribal-hand parsimony — the anchor); Revesz / Daggumati
+& Revesz (script-as-taxon — the cautionary precedent); Corazza 2022 (CM medium confound);
+Braović et al. 2024 (Aegean review; allograph/scribe challenges); Salgarella 2020 + SigLA
+(LA↔LB homomorphy); Ferrara–Montecchi–Valério 2022 (CH↔LA: shared template, not direct
+descent).
