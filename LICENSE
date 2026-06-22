@@ -19,11 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-NOTE ON DATA. This MIT licence covers the code in this repository. The derived
-data tables (LA<->LB correspondence pairs, scribal-hand labels, and the corpus
-statistics published under findings/) are licensed CC BY-NC-SA 4.0, as they are
-derived from research-only corpora (DAMOS, SigLA, lineara.xyz, LinearBExplorer,
-GORILA). No copyrighted corpus images are included in this repository.

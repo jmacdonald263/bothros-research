@@ -1,0 +1,19 @@
+Data licence — Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International (CC BY-NC-SA 4.0)
+
+The code in this repository is MIT-licensed (see LICENSE). This file covers the
+DERIVED DATA TABLES published here: the Linear A <-> Linear B correspondence
+pairs, the scribal-hand labels, and the derived corpus statistics under
+findings/.
+
+These tables are derived from research-only corpora (DAMOS, SigLA, lineara.xyz,
+LinearBExplorer, GORILA) and are therefore distributed under CC BY-NC-SA 4.0:
+
+  - Attribution — credit BOTHROS and the underlying corpora.
+  - NonCommercial — not for commercial use.
+  - ShareAlike — distribute derivatives under the same licence.
+
+Full legal text: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+No copyrighted corpus images are included in this repository; reproductions
+fetch images from the corpora's own sources.

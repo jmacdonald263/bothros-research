@@ -111,6 +111,7 @@ Sign2Vec_d) is copyright-restricted and non-redistributable.
 ## Licence
 
 - **Code:** MIT (see [`LICENSE`](LICENSE)).
-- **Derived data** (correspondence tables, hand labels, derived statistics): CC BY-NC-SA 4.0,
-  derived from DĀMOS, SigLA, lineara.xyz, LinearBExplorer, GORILA (research use). No
-  copyrighted corpus images are included; reproductions fetch images from those sources.
+- **Derived data** (correspondence tables, hand labels, derived statistics): CC BY-NC-SA 4.0
+  (see [`DATA_LICENSE`](DATA_LICENSE)), derived from DĀMOS, SigLA, lineara.xyz,
+  LinearBExplorer, GORILA (research use). No copyrighted corpus images are included;
+  reproductions fetch images from those sources.
