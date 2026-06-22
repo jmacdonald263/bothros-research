@@ -127,24 +127,26 @@ characters are coarse and miss stroke topology (the research's recommended chara
 
 **Three variants run — the result is robust:**
 
-| variant | P@1 (secure partner nearest) | mean partner rank | style control |
-|---|---|---|---|
-| LA SigLA-facsimile + LB linearb-**photo**, skeleton-free chars | 18% | 4.73/11 | script-separated |
-| LA SigLA + LB linearb-**facsimile** (source-matched), skeleton-free | 18% | 3.91/11 | script-separated |
-| source-matched + **skeleton** chars (endpoints/junctions/length) | 18% | 4.55/11 | script-separated |
+| variant | sources | chars | P@1 | mean rank | style |
+|---|---|---|---|---|---|
+| 1 | LA SigLA-facs + LB linearb-**photo** (mismatched type) | skeleton-free | 18% | 4.73/11 | script-sep |
+| 2 | LA SigLA-facs + LB linearb-**facs** (matched type, cross-editor) | skeleton-free | 18% | 3.91/11 | script-sep |
+| 3 | as #2 | **+skeleton** | 18% | 4.55/11 | script-sep |
+| 4 | LA lineara-facs + LB linearb-**facs** (**same editor**, mwenge) | +skeleton | **9% = chance** | 5.09/11 | script-sep |
 
-(`lineara.xyz` + `linearb.xyz` both have photo *and* facsimile sets, all per-sign labelled —
-the earlier "no labelled LB facsimile" note was wrong; the real issue was a source-*type*
-mismatch, since fixed. LA syllabograms come from SigLA because the lineara.xyz facsimile
-imagemap is GORILA-`*NNN`-coded and lacks the secure low syllabograms.)
+(All four labelled per-sign. `lineara.xyz` + `linearb.xyz` each have photo *and* facsimile
+sets; the LA crops are AB-coded in the imagemap manifest — no `*NNN` map needed. The earlier
+"no labelled LB facsimile" note was simply wrong.)
 
-**Verdict (robust): auto-extracted structural characters do not work.** P@1 is stuck at 18%
-(2× chance, weak) and signs separate by script across *every* combination of source-type and
-character-set. There is a faint real signal (within-pair < cross-pair distance — homomorphic
-pairs are slightly closer) but it is dominated by script/editor style and never reaches
-reliable matching. This is exactly what the method research predicted: the discriminative
-work is in **expert, catalogue-anchored hand-coding of characters (Skelton's design)**, which
-is a specialist, weeks-long task — *not* an automatable feature pipeline.
+**Verdict (decisive): auto-extracted structural characters cannot do this.** Removing every
+suspected confound in turn — source type (#2), character coarseness (#3), and finally the
+editor confound (#4, same mwenge facsimiles) — does **not** help; the cleanest, fully-matched
+variant #4 is the *worst* (P@1 = chance), and signs separate by script throughout. So the
+homomorphy of the secure pairs is not recoverable from coarse image-derived statistics — auto
+character extraction is essentially a crude, style-confounded embedding. This confirms the
+method research emphatically: the discriminative work is **expert, catalogue-anchored
+hand-coding of characters (Skelton's design)** — a specialist, weeks-long task, not an
+automatable pipeline.
 
 **Recommendation: do NOT scale to the full NeighborNet/Mkv tree.** The automatable routes
 have been tried and gated out; a credible build now requires either expert palaeographic
