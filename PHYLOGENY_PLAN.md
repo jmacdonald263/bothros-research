@@ -148,11 +148,40 @@ method research emphatically: the discriminative work is **expert, catalogue-anc
 hand-coding of characters (Skelton's design)** — a specialist, weeks-long task, not an
 automatable pipeline.
 
-**Recommendation: do NOT scale to the full NeighborNet/Mkv tree.** The automatable routes
-have been tried and gated out; a credible build now requires either expert palaeographic
-character coding (major commitment, uncertain payoff) or a fundamentally better
-style-invariant shape representation. The pilot did its job — it saved that effort and tells
-us precisely why. (Scripts: `src/exp_phylo_pilot.py`.)
+## Diagnostic follow-up (2026-06-22) — the real reason, and a correction
+
+Pushed on "first stumbling block ≠ can't be done." Two diagnostics
+(`src/exp_phylo_shape_diag.py` + crop montages):
+
+1. **Direct normalized-mask shape comparison** (bypassing the hand-crafted characters) gives
+   the *same* P@1 = 18% — so the characters weren't the weak link; raw shape is weak too.
+2. **Visual inspection of individual crops** shows *why*: the crops are recognisable signs,
+   but with high within-sign variation, genuine LA-vs-LB facsimile rendering differences
+   (homomorphic ≠ identical), and binarization failures — and averaging blurs all three into
+   mush.
+
+**The correction (important):** "match secure LA↔LB pairs by sign form" is **already solved**
+— by the classifier *embedding*, which scores **P@1 90.9% / P@5 100%** on these same 11 pairs
+([cross_script_cognates.md](findings/cross_script_cognates.md)). Same centroid method as the
+pilot; the only difference is representation. The embedding is trained to be invariant to the
+attestation variation that sank raw-pixel shape. So the earlier "auto characters can't do it,
+full stop" was too broad — it's specifically *raw-shape / coarse auto-characters* that are
+weak, not the matching task.
+
+**What this leaves for an actual phylogeny:**
+- *Pairwise* cross-script correspondence by form: **done** (embedding, validated, anchored).
+- A *tree* (topology) from embedding distances: still the genuine trap — cross-script
+  embedding *distance* is style-confounded (Phaistos/Revesz); only *anchored P@K* is safe.
+  So a tree adds topology we can't trust, over a pairwise result we already have.
+- An *auditable* tree (the original motivation) still needs explicit characters, and
+  auto-extracted ones are too weak → expert hand-coding.
+
+**Revised recommendation:** the *value-add of a tree* over the existing validated pairwise
+embedding result is unclear and topology-confounded — so don't build it for its own sake. If
+revisited, the fixable next step is **embedding-derived characters** (discretise the
+classifier embedding into auditable features) or **per-exemplar** (not averaged) matching —
+not raw-pixel shape. The pilot's value: it found the specific reason (representation), not a
+dead end.
 
 ## Key references
 
