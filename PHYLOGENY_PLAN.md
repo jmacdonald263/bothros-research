@@ -107,6 +107,33 @@ Gate the whole project on a ~22-sign pilot (the 11 secure LA↔LB pairs) before 
 A common-font pilot that *still* separates by script would be a clean negative (shape alone
 doesn't carry the correspondence); one where secure pairs are closest is the green light.
 
+## Pilot result (run 2026-06-22, `src/exp_phylo_pilot.py`)
+
+Ran the gate on the 11 secure pairs using **our real crops** (LA = SigLA facsimiles by
+AB-code; LB = `lb_labeller_train_v3` by reading) + skeleton-free explicit characters (holes,
+aspect, extent, solidity, symmetry, Hu moments).
+
+- **Gate 1 (known-answer): weak.** Secure-partner P@1 = 18% (2/11) vs 9% chance; mean partner
+  rank 4.7/11. The secure LB partner is not reliably the nearest LB sign in character space.
+- **Gate 2 (style control): fires.** Intra-script distance (4.93) < inter-script (5.46) — the
+  signs cluster by *script*; within-pair (5.12) barely below cross-pair (5.50).
+
+**Verdict: the naive version does not clear the gate** — consistent with the predicted
+medium/source confound (Corazza 2022) and the Phaistos lesson. **Two honest caveats on the
+pilot itself**, so this is not a clean death sentence for the project: (a) the sources are
+processed *differently* — LA is a clean alpha-channel facsimile silhouette, LB a noisy
+photo-Otsu mask — and that asymmetry alone could drive the script split; (b) skeleton-free
+characters are coarse and miss stroke topology (the research's recommended characters).
+
+**Blocker surfaced:** we lack a clean **labelled LB facsimile** source (Bennett is unlabelled
+page scans; our LB crops are photos), so a *source-matched* crop pilot isn't possible with
+current data. To proceed honestly the full build needs one of: (i) a clean labelled LB
+facsimile/line-art source processed identically to SigLA; (ii) the common-font route as a
+controlled (if circularity-flagged) baseline; (iii) skeleton-based or hand-coded
+catalogue-anchored characters + the formal style/medium partition control. **Recommendation:
+do not scale to the full NeighborNet/Mkv tree until source-control + better characters are in
+place — the pilot saved that effort.**
+
 ## Key references
 
 Lewis 2001 (Mk/Mkv); Wright & Hillis 2014 (Bayesian Mk beats parsimony on noisy morphology);
