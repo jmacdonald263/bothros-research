@@ -2,8 +2,10 @@
 
 Exploratory findings from the [BOTHROS](https://github.com/jmacdonald263/bothros)
 Aegean sign-reading pipeline — *what a vision model recovers from Linear A / Linear B
-sign shapes that isn't obvious by eye.* Companion to the tool repo; weights on
-[Hugging Face](https://huggingface.co/JMacD263/linear-a-linear-b-bothros), archived on
+sign shapes that isn't obvious by eye.* Companion to the tool repo
+([github.com/jmacdonald263/bothros](https://github.com/jmacdonald263/bothros)); weights on
+[Hugging Face](https://huggingface.co/JMacD263/linear-a-linear-b-bothros), live
+[demo Space](https://huggingface.co/spaces/JMacD263/bothros-demo), archived on
 [Zenodo](https://doi.org/10.5281/zenodo.20746759).
 
 > **Research preview.** These are honest experiments, not decipherment. Every claim
@@ -31,13 +33,18 @@ finding ships its reproduction script/notebook and a stated null + significance 
 
 ## Reproducibility
 
-Embedding-based findings use the **shipped, held-out-safe (benchmark) BOTHROS weights**
-— one unified detector + the two classifiers — so the figures come from one pipeline and
-no anchored claim rests on the leakage-prone full-data *release* variant (see
-[`METHODOLOGY.md`](METHODOLOGY.md) for why). Sign embeddings are the penultimate-layer
-activations of those classifiers. The **model-free** findings (entropy / Heaps /
-sign-network) read only the sign sequences — no classifier — and are leakage-immune by
-construction.
+Model-dependent findings are run on **both published BOTHROS weight sets on Hugging Face**
+and report the delta: the **full-data release** (`*_release.pth`, featured — the model a
+user actually downloads) and the **held-out-safe benchmark** (`*_classifier.pth`). Sign
+embeddings are the penultimate-layer activations of those classifiers. The two columns
+answer different questions — the release number is the deployed model's performance
+(inflated to an *in-domain ceiling* on the oracle, since the test crops are in its training
+set), and the benchmark number is the honest held-out generalisation estimate. A recurring
+result: **"most data" wins some tasks and loses others** (it beats benchmark on the Pylos
+scribal Mantel and the in-domain oracle, but is marginally *worse* on cross-script cognates
+and Knossos hand-ID). The **model-free** findings (entropy / Heaps / sign-network / topics /
+restoration) read only the sign sequences — no classifier — and are leakage-immune by
+construction. See [`METHODOLOGY.md`](METHODOLOGY.md).
 
 ## Licence
 
