@@ -44,6 +44,27 @@ is 83.8% on the same footing, just below it. The `<5` stratum (0%) is the long-t
 the classifier's main weakness, and where rare-sign methods would have to improve. The
 held-out eval is small (87 signs), so the strata are directional.
 
+## Training-free prototype head
+
+Can a sign be classified without the trained softmax head at all — by nearest class
+*centroid* in embedding space (the premise behind a "gallery" / template-matching classifier,
+where adding a sign needs one example and no retraining)? Centroids built from training crops
+(penultimate-layer embeddings, capped at 25/class), held-out crops classified by cosine
+nearest centroid, same crops and label mapping as above:
+
+| LA weights | prototype top-1 | prototype top-5 | softmax top-1 | softmax top-5 |
+|---|---|---|---|---|
+| benchmark | 71.3% (CI [61.0, 79.7]) | 87.4% | 79.3% | 83.9% |
+| release | 86.2% (CI [77.4, 91.9]) | 91.9% | 89.7% | 94.3% |
+
+The training-free head is competitive but below the trained softmax on top-1 (−8pp
+benchmark, −3.5pp release), while its top-5 is comparable or slightly higher. It does **not**
+rescue the long tail — the `<5`-instance and unseen strata are 0% as with softmax. So it is
+useful as a flexibility feature (add a class from one exemplar, no retraining) rather than an
+accuracy gain. This is the gold-crop evaluation of the embedding-nearest-classification
+approach; a per-crop k-NN gallery and an end-to-end (detector-coupled) variant are the same
+method family.
+
 ## DeepScribe context
 
 DeepScribe (Williams et al.) reports ≈74% top-1 for Elamite cuneiform sign classification.
