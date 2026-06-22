@@ -61,9 +61,14 @@ The training-free head is competitive but below the trained softmax on top-1 (�
 benchmark, −3.5pp release), while its top-5 is comparable or slightly higher. It does **not**
 rescue the long tail — the `<5`-instance and unseen strata are 0% as with softmax. So it is
 useful as a flexibility feature (add a class from one exemplar, no retraining) rather than an
-accuracy gain. This is the gold-crop evaluation of the embedding-nearest-classification
-approach; a per-crop k-NN gallery and an end-to-end (detector-coupled) variant are the same
-method family.
+accuracy gain.
+
+A per-exemplar **k-NN(1)** variant (nearest individual training crop, not the centroid) was
+also tested and is **worse**, not better: 57.5% top-1 vs the centroid's 71.3% (benchmark LA).
+On clean gold crops a single nearest neighbour is noisier than the class mean, so averaging
+helps here. Neither head rescues the `<5`-instance tail (0% under softmax, centroid, and
+k-NN alike) — that floor is data scarcity, not the head. (k-NN did edge the centroid on the
+5–19 stratum, but n=3.)
 
 ## DeepScribe context
 

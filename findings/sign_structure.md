@@ -56,9 +56,14 @@ with near-identical contextual distributions (low Jensen–Shannon divergence): 
 It does not survive its own control: the correlation between a pair's JSD and the signs'
 minimum frequency is −0.76, so low JSD ("looks like an allograph") tracks high frequency
 rather than genuine distributional identity. Frequent signs share generic contexts; rare
-signs have noisy distributions. The candidates are a frequency artefact, so the method is
-reported as inconclusive rather than as a candidate list. A frequency-matched null per pair
-would be the fix.
+signs have noisy distributions.
+
+The fix — a **frequency-matched null per pair** — was then run: score each candidate's
+context-JSD against same-type pairs of matched frequency and keep only those significantly
+below it (z ≤ −2). **Only 1 of 1,792 pairs survives** (AB27~AB44, marginal z=−2.4) — *fewer
+than chance*, confirming the low-JSD signal was a frequency artefact, not allography. So this
+is now a *controlled* negative, not merely a flagged one: there are essentially no genuine
+distributional allographs in Linear A at this corpus size.
 
 A separate visual-clustering attempt (k-means on sign-crop embeddings, silhouette-selected)
 splits only 1 of 91 sign classes — so neither the distributional nor the visual route finds
