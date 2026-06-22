@@ -83,12 +83,29 @@ confounded — Skelton shows the validated version is not hopeless; Revesz shows
 unvalidated version to avoid. Large effort, real risk; this is the next substantial piece,
 not a quick result.
 
-## Suggested first step
+## Suggested first step — the pilot (data path now scoped)
 
-Code the ~11 secure-pair signs + their nearest neighbours by hand (a few dozen signs) as a
-**pilot matrix**, run NeighborNet + Mkv, and check the known-answer + style-control on that
-small set *before* scaling to the full inventory. If the pilot fails the controls, the full
-project is not worth building.
+Gate the whole project on a ~22-sign pilot (the 11 secure LA↔LB pairs) before scaling:
+
+1. **Glyphs from a common Unicode font, not facsimiles.** Render the LA and LB members of
+   each secure pair from a single Aegean font (Noto Sans Linear A + Linear B, or Douros
+   Aegean) at identical size/weight. This removes the editor/medium confound *by
+   construction* — the cleanest possible input, and the honest baseline before touching
+   style-varied facsimiles. (Map: secure AB-code → Linear A Unicode; reading → Linear B
+   syllabogram Unicode. SigLA `attestations.json` provides AB-code→crop for a facsimile
+   cross-check; Bennett images are unlabelled page fragments, not per-sign usable.)
+2. **Skeleton-free structural characters** (skimage is PEP-668-blocked; cv2+scipy suffice):
+   Hu moments, hole count (scipy.ndimage Euler number), aspect/extent/solidity, vertical &
+   horizontal symmetry, projection profiles. (Add a Zhang–Suen thinning in numpy later if
+   stroke/junction counts are wanted.)
+3. **Gate, in order:** (a) **known-answer** — are the secure LA↔LB pairs closer in character
+   space than random LA–LB pairs? (b) **style control** — do the signs separate by *script*
+   (LA vs LB) rather than pair up by correspondence? If they separate by script, the
+   characters encode rendering, not identity → confounded → report and stop. Only if the
+   pilot passes both is the full-inventory build (NeighborNet + Mkv) worth it.
+
+A common-font pilot that *still* separates by script would be a clean negative (shape alone
+doesn't carry the correspondence); one where secure pairs are closest is the green light.
 
 ## Key references
 
