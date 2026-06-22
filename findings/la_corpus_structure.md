@@ -1,22 +1,23 @@
 # Linear A internal structure — topics, site variation, word boundaries
 
-**Register: extends, descriptive — with two honest near-negatives.** Three model-free
-reads of the Linear A corpus itself (sign sequences + tablet bags from `corpus.db`, no
-classifier). They are exploratory: useful descriptions of administrative structure, but two
-of the three are reported with explicit confounds rather than as claims, because LA has no
-decipherment to validate against.
+Three model-free reads of the Linear A corpus (sign sequences and tablet bags from
+`corpus.db`, no classifier). These are exploratory descriptions of administrative structure;
+two of the three carry explicit confounds and are reported as descriptive rather than as
+claims, since LA has no decipherment to validate against.
 
 ## 1. Topic model — unsupervised functional groupings
 
-LDA over 412 LA tablets (313-sign vocabulary, 8 topics): **3 of 8 topics are
-logogram-anchored** — i.e. the unsupervised decomposition spontaneously separates tablets
-by *what commodity they record*, clustering commodity logograms + fractions away from the
-syllabographic material. Global sign-type mix: 198 logogram / 97 syllabogram / 16 fraction.
+LDA over 412 LA tablets (313-sign vocabulary, 8 topics): 3 of 8 topics are logogram-anchored
+— the decomposition separates tablets by what commodity they record, clustering commodity
+logograms and fractions away from the syllabographic material (global sign-type mix: 198
+logogram / 97 syllabogram / 16 fraction). The same LDA over the larger Linear B corpus
+(5,167 tablets, 10 topics) likewise produces commodity-anchored topics (e.g. a sheep-
+accounting topic led by `ovis:m` / `ovis:f`).
 
-This agrees with the [accounting structure](sign_structure.md) seen in the fraction
-analysis (commodity-logogram + quantity), now from a fully unsupervised angle. Reported as a
-**candidate** description, not a claim: there is no external topic GT for LA, so this is "the
-corpus has commodity-functional structure a topic model can find," not a typology.
+This agrees with the [accounting structure](sign_structure.md) seen in the fraction analysis
+(commodity-logogram + quantity), from an unsupervised angle. Reported as a description, not a
+typology: there is no external topic ground truth, and on short tablets the syllabogram
+topics are largely frequency-driven.
 
 ## 2. Site variation — distributional, NOT (yet) dialectal
 
@@ -49,24 +50,17 @@ sequences (435 docs, 1,247 gold word boundaries from `word_parity`, boundary rat
 | random baseline @ the boundary rate | 0.326 |
 | **honest gain over random** | **+0.042** |
 
-A **near-negative**: only +4pp over chance. LA words are short (mean ≈3 signs), so there is
-little intra-word predictability for branching entropy to exploit, and the per-sign estimate
-is noisy on a small corpus. We report the marginal gain honestly rather than the
-recall-inflated threshold-sweep F1 (0.49, recall 0.96 — not a real operating point).
-Consistent with LA carrying the least sequential structure of the three scripts
-([distributional](distributional_structure.md)).
-
-## Why these are here
-
-The [rigor gate](../METHODOLOGY.md) is not only for the headline wins — it is why the two
-weak results above ship with their confounds named (site variation) and their honest gain
-quoted (segmentation) instead of being dropped or dressed up. All three are model-free, so
-the choice of classifier weights does not enter.
+Only +4pp over chance. LA words are short (mean ≈3 signs), so there is little intra-word
+predictability for branching entropy to exploit, and the per-sign estimate is noisy on a
+small corpus. The marginal gain is reported rather than the recall-inflated threshold-sweep
+F1 (0.49 at recall 0.96, not a real operating point). Consistent with LA's lower sequential
+structure ([corpus structure](distributional_structure.md)).
 
 ## Reproduce
 
 ```bash
-/opt/homebrew/bin/python3.12 src/exp_lda_topics.py              # -> data/exp_lda_topics.json
-/opt/homebrew/bin/python3.12 src/expb3_b5_dialectology.py       # -> data/expb3_b5_dialectology.json
-/opt/homebrew/bin/python3.12 src/exp_branching_entropy_seg.py   # -> data/exp_branching_entropy_seg.json
+/opt/homebrew/bin/python3.12 src/exp_lda_topics.py              # LA topics
+/opt/homebrew/bin/python3.12 src/expc3_topic_model.py           # LB + LA topics
+/opt/homebrew/bin/python3.12 src/expb3_b5_dialectology.py       # site variation
+/opt/homebrew/bin/python3.12 src/exp_branching_entropy_seg.py   # word segmentation
 ```

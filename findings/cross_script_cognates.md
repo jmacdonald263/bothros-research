@@ -1,10 +1,8 @@
-# Cross-script LA↔LB sign cognates — the embedding recovers published correspondences
+# Cross-script LA↔LB correspondences from visual similarity
 
-**Register: matches + extends.** The credibility anchor: a vision model, given only sign
-*shapes*, recovers the Linear A ↔ Linear B sign correspondences scholars established from
-decipherment — and ranks them in the scholars' own confidence order. Reported on **both
-published weight sets** (full-data release + held-out benchmark) with **two independent
-null baselines**. It clears the [rigor gate](../METHODOLOGY.md) on every count.
+Given only sign shapes, the classifier embedding recovers Linear A ↔ Linear B sign
+correspondences established from decipherment, and ranks them in the published confidence
+order. Reported on both weight sets (release + benchmark) against an ImageNet baseline null.
 
 ## Setup
 
@@ -24,43 +22,38 @@ null baselines**. It clears the [rigor gate](../METHODOLOGY.md) on every count.
 | **benchmark** (`la_classifier.pth`, held-out-safe) | **90.9%** (10/11) | **100%** (11/11) | 75.9% | **94.4%** |
 | **release** (`la_classifier_release.pth`, full-data) | 81.8% (9/11) | **100%** (11/11) | 72.2% | 92.6% |
 
-**Both published models hit secure P@5 = 100%** — every high-confidence correspondence is
-recovered in the top 5. They rank the tiers in the scholars' order too (benchmark P@1:
-secure 90.9% > probable 75.0% > possible 63.6%).
+Both weight sets reach secure P@5 = 100% — every high-confidence correspondence is in the
+top 5 — and both rank the tiers in the published order (benchmark P@1: secure 90.9% >
+probable 75.0% > possible 63.6%).
 
-**Honest delta — more data did *not* help here.** The full-data release model is **slightly
-worse** than the held-out benchmark on this task (secure P@1 81.8% vs 90.9%; all-54 P@5
-92.6% vs 94.4%). Unlike the [oracle](classifier_oracle.md) — where the release model's extra
-(memorised) data inflates the number — cross-script cognate recovery is a *relational* task
-the extra tablets don't improve; if anything the larger, noisier release vocabulary blurs
-the centroids a little. Worth stating plainly: "best model = most data" is **not** a
-universal rule, and this finding is a clean counter-example.
+The full-data release model is slightly worse here than the held-out benchmark (secure P@1
+81.8% vs 90.9%; all-54 P@5 92.6% vs 94.4%). Unlike the [oracle](classifier_oracle.md), where
+the release model's extra (memorised) data inflates the figure, this is a relational task the
+extra tablets do not improve — the larger, noisier release vocabulary blurs the centroids
+slightly. More training data is not uniformly better.
 
-## Two nulls — the signal is real, and backbone choice is decisive
+## Baselines
 
-P@5 on all 54, ranked:
+P@K on all 54, with two no-Aegean-training nulls:
 
 | embedding | P@1 (all) | P@5 (all) |
 |---|---|---|
-| **DINOv3 ViT-B** (generic self-supervised, no Aegean training) | **0%** (0/58) | ~0% |
-| ImageNet ConvNeXt (no Aegean training) | 1.9% | 18.5% |
-| `lb_shared` (LB-backbone, fine-tuned) | 59.3% | 87.0%–79.6% |
-| **`la_shared`** (LA-backbone, fine-tuned) | **72–76%** | **92.6–94.4%** |
+| DINOv3 ViT-B (generic self-supervised) | 0% (0/58) | ~0% |
+| ImageNet ConvNeXt | 1.9% | 18.5% |
+| `lb_shared` (LB backbone, fine-tuned) | 59.3% | 79.6%–87.0% |
+| `la_shared` (LA backbone, fine-tuned) | 72–76% | 92.6–94.4% |
 
-Two distinct nulls fail: a generic ImageNet backbone scores 18.5% P@5 (its neighbours
-collapse onto hub signs — LB numerals, `me`), and **DINOv3 — a strong modern
-self-supervised ViT — scores 0/58 P@1**, worse than ImageNet. The cross-script signal is
-**not** generic visual similarity: it requires a backbone *fine-tuned on Aegean signs*.
-That the fancier self-supervised model does worse is itself the point — task-specific
-training, not model size or recency, is what carries sign identity across scripts.
+Both nulls fail: ImageNet scores 18.5% P@5 (its neighbours collapse onto hub signs — LB
+numerals, `me`), and DINOv3 scores 0/58 P@1. The signal requires a backbone fine-tuned on
+Aegean signs; generic visual features, including a modern self-supervised ViT, do not carry
+it.
+## Limits
 
-## Honest limits
-
-- **Small secure-n.** 11 secure pairs; benchmark P@1 90.9% rests on 10/11. The two nulls at
-  ~0–18% are what make the small n decisive — the gap, not the point estimate, is the claim.
-- **Candidate vs confirmed.** Only the *secure* tier confirms the method; probable/possible
-  are the model's agreement with progressively weaker scholarly proposals.
-- **Reproduces the prior internal headline** ("100% P@5 on 11 secure") on both weight sets.
+- 11 secure pairs; benchmark P@1 90.9% rests on 10/11. The baselines at ~0–18% are what make
+  the small sample informative — the gap, not the point estimate.
+- Only the secure tier is treated as confirmation; probable/possible report the model's
+  agreement with progressively weaker scholarly proposals.
+- Reproduces the prior internal estimate ("100% P@5 on 11 secure") on both weight sets.
 
 ## Reproduce
 
@@ -69,9 +62,8 @@ PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.6 PYTORCH_MPS_LOW_WATERMARK_RATIO=0.4 \
   /opt/homebrew/bin/python3.12 src/cross_script_embeddings.py            # benchmark weights
   /opt/homebrew/bin/python3.12 src/cross_script_embeddings.py --release  # full-data weights
 # -> data/cross_script_similarity_{la_classifier,la_classifier_release}__*.json
-# DINOv3 null: src/expa4_dinov3_cross_script.py -> data/expa4_dinov3_cross_script.json
+/opt/homebrew/bin/python3.12 src/expa4_dinov3_cross_script.py             # DINOv3 baseline null
 ```
 
-Contrast with [the Phaistos negative](NEGATIVE_phaistos.md): that claim had no GT anchor and
-died on the rendering-style confound. This one is anchored to 54 published correspondences
-with **two** baseline nulls — the whole difference.
+This is scored against the 54 published correspondence pairs rather than raw cross-script
+proximity, for the rendering-style confound described in [`../METHODOLOGY.md`](../METHODOLOGY.md).

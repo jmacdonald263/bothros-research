@@ -1,80 +1,73 @@
-# Sequential structure & sign inventory — three methods, one honest ceiling
+# Corpus structure — sequence order, inventory, and adjacency
 
-**Register: extends — with a self-imposed negative.** This is the one family of results
-that **never touches the classifier**: it reads only the sign *sequences* in the corpus
-(`corpus.db`). So it is leakage-immune by construction — the release-vs-benchmark
-distinction (which haunts the embedding findings) cannot apply here. What it can still get
-wrong is *over-interpretation*, and the headline below is the guard against exactly that.
+Model-free analyses of the sign sequences in `corpus.db` (no classifier, so independent of
+the weights). Linear A and Linear B are the focus; Cretan Hieroglyphic is included only as a
+control where a three-way comparison is informative.
 
-## Result: CH > LB > LA on every sequential-structure metric — and that ordering is the finding's own warning
+## Sequence order
 
-Three independent, model-free measures of "how much does sign *order* carry structure
-beyond a bag of signs," each against its own shuffled/rewired null:
+How much does sign *order* carry structure beyond a bag of signs, measured against a
+within-document shuffle null:
 
-| Metric (↑ = more sequential structure) | Cretan Hieroglyphic | Linear B | Linear A |
+| order signal (H₂ shuffle-null − H₂, bits) | LB | LA | CH (control) |
 |---|---|---|---|
-| **Order signal** (H₂ shuffle-null − H₂, bits) | **1.48** (25.2% of H₁) | 0.60 (8.2%) | 0.42 (6.2%) |
-| **Directional asymmetry gain** (vs degree-preserving rewire) | **+0.356** | +0.235 | +0.094 |
-| **Community modularity gain** (vs rewire null) | **+0.137** | +0.075 | +0.068 |
+| | 0.60 | 0.42 | 1.48 |
 
-All three agree: **CH > LB > LA**, all above their nulls. Tidy — and a trap.
+**Is LA's lower value real, or just its smaller corpus?** A matched-corpus-size bootstrap
+(LB and CH subsampled to LA's ~4,200 tokens, 20 resamples) keeps the ordering:
 
-**The ordering refutes the tempting reading.** Linear B *is* Mycenaean Greek — a known
-natural language. Cretan Hieroglyphic is mostly short, formulaic seal-legends. If these
-metrics measured *linguisticality*, LB would top CH. It doesn't — CH tops LB on all three.
-So what they actually rank is **formulaicity / template-rigidity**, not linguistic depth.
-This is [Sproat's (2010) critique](https://aclanthology.org/J10-4006/) of conditional-
-entropy "is-it-language" tests — now demonstrated **with our own known-language control**
-(LB) rather than asserted. **We therefore make no "LA is / isn't a language" claim from
-this.** That restraint is the result.
+| matched-size order signal (bits) | value [95% CI] |
+|---|---|
+| LA (full) | 0.476 [0.471, 0.481] |
+| LB (subsampled to LA size) | 0.594 [0.574, 0.615] |
+| CH (subsampled to LA size) | 1.560 [1.555, 1.565] |
 
-What we *do* report: the relative regime (CH most templated; LB and LA looser, LA loosest)
-and, separately, LA's inventory behaviour below.
+LB stays above LA at equal size, so **LA genuinely carries less adjacent-sign structure
+than LB** — not a sampling artifact.
 
-## Inventory: LA sits in the natural-language band, but undersampled
+What this does *not* show: that the metric measures language. CH (short, formulaic
+seal-legends) scores highest, above LB (known Mycenaean Greek). If the metric tracked
+linguisticality, LB would lead. It does not, so it ranks **formulaicity / template-rigidity**
+([Sproat 2010](https://aclanthology.org/J10-4006/) makes this argument; the LB control shows
+it directly). No "LA is / isn't a language" claim follows from these numbers.
 
-Heaps' law (type growth β) + hapax fraction, per script:
+## Inventory (Heaps / Zipf)
 
 | | tokens | types | hapax % | Heaps β | regime |
 |---|---|---|---|---|---|
-| **CH** | 3,781 | 135 | **5.9%** | **0.256** | inventory near-**saturated** (small fixed sign-set, well-sampled) |
-| **LB** | 35,181 | 992 | 39.9% | 0.404 | **undersampled**, natural-language band |
-| **LA** | 4,324 | 346 | **45.7%** | **0.451** | **undersampled**, natural-language band |
+| LB | 35,181 | 992 | 39.9% | 0.404 | undersampled (natural-language band) |
+| LA | 4,324 | 346 | 45.7% | 0.451 | undersampled (natural-language band) |
+| CH (control) | 3,781 | 135 | 5.9% | 0.256 | near-saturated inventory |
 
-LA's β = 0.45 sits squarely in the natural-language band (0.4–0.6) — a *weak positive*
-signal, but honestly flagged as **undersampling-confounded**: 45.7% of LA sign-types occur
-once, so the projection (≈373 unseen types at 5× corpus) and the absolute entropies are
-**lower bounds**, not estimates. Restricting LA to its ~100 syllabographic core drops β to
-0.236 (hapax 22%) — i.e. the syllabary looks near-closed; it's the **logographic tail**
-that inflates whole-corpus LA. That decomposition is itself the useful structural fact.
+LA's β sits in the natural-language band (0.4–0.6), but with 45.7% of types occurring once
+the absolute entropies and the ≈373-unseen-type projection at 5× corpus are lower bounds, not
+estimates. Restricting LA to its ~100 syllabographic core drops β to 0.236 (22% hapax): the
+syllabary is near-closed, and the open tail is logographic — a useful decomposition in its
+own right.
 
-## A weak-but-real bonus: sign-adjacency communities partly recover sign *type*
+## Adjacency
 
-The LA co-occurrence network's 12 communities align with the syllabogram / logogram /
-fraction partition at **NMI 0.113 vs a 0.029 null** (purity 0.656) — ~4× the null. Weak,
-but real: who-stands-next-to-whom carries a shadow of *what kind of sign it is*, with no
-glyph-shape input at all. Pre-declared as a **candidate** structural signal, not a typology.
+Sign-adjacency networks, gain over a degree-preserving rewire null:
 
-## How this clears the [rigor gate](../METHODOLOGY.md)
+| | directional-asymmetry gain | modularity gain |
+|---|---|---|
+| LB | +0.235 | +0.075 |
+| LA | +0.094 | +0.068 |
+| CH (control) | +0.356 | +0.137 |
 
-1. **Anchored / controlled** — every metric is reported as a *gain over a stated null*
-   (within-document shuffle for entropy; degree-preserving rewire for the network), and the
-   whole family carries a **known-language control (LB)** that is what exposes the
-   formulaicity ceiling.
-2. **Negative shipped, not buried** — the headline *is* the negative: the metric cannot
-   adjudicate linguisticality, and we say so instead of cropping to "LA shows language-like
-   structure."
-3. **Secure vs candidate** — the relative regime and LA's β-band placement are reported as
-   weak signals; the community→type recovery is flagged candidate.
+The Linear A co-occurrence graph (164 nodes, 668 edges) is hub-structured: the busiest signs
+are syllabograms (*ku* deg 213, *a* 173, *da* 156, *ta* 152) plus the fraction logogram A707
+(deg 153), which also has the highest betweenness (0.229) — it bridges otherwise separate
+groups, consistent with its accounting role. The network's communities weakly track the
+syllabogram/logogram/fraction split (NMI 0.113 vs 0.029 null, ~4× chance) — a candidate
+structural signal, not a typology.
 
 ## Reproduce
 
 ```bash
-# model-free — reads corpus.db sign sequences only; needs networkx (python3.12)
-/opt/homebrew/bin/python3.12 src/exp_entropy_linguisticality.py   # -> data/exp_entropy_linguisticality.json
-/opt/homebrew/bin/python3.12 src/exp_heaps_inventory.py           # -> data/exp_heaps_inventory.json
-/opt/homebrew/bin/python3.12 src/exp_sign_network.py              # -> data/exp_sign_network.json
+/opt/homebrew/bin/python3.12 src/exp_entropy_linguisticality.py   # entropy / order signal
+/opt/homebrew/bin/python3.12 src/expb1b_corpus_size_control.py    # matched-size bootstrap
+/opt/homebrew/bin/python3.12 src/exp_heaps_inventory.py           # Heaps / Zipf
+/opt/homebrew/bin/python3.12 src/exp_sign_network.py              # directional asymmetry / modularity
+/opt/homebrew/bin/python3.12 src/expi_cooccurrence_network.py     # LA co-occurrence hubs
 ```
-
-Prior internal estimate (2026-06-18): qualitative "CH > LB > LA, don't overclaim." This
-re-run **confirms it quantitatively and unchanged** — as expected for a model-free analysis.

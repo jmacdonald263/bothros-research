@@ -1,10 +1,8 @@
 # Sign structure — accounting syntax, attested words, and an allograph dead-end
 
-**Register: extends + matches, with an honest dead-end.** Three model-free reads of *what
-kind of sign goes where* in Linear A. Two recover structure that agrees with what
-epigraphers already know (so they validate the method); one is reported as **inconclusive**
-because a frequency confound eats the signal. All read sign sequences from `corpus.db` — no
-classifier, so leakage cannot apply.
+Three model-free reads of what kind of sign goes where in Linear A. Two recover structure
+that agrees with established readings; the third is inconclusive under its own control. All
+read sign sequences from `corpus.db` (no classifier).
 
 ## 1. The accounting syntax: fractions bind to commodity logograms
 
@@ -55,14 +53,16 @@ We tried to find **allographs** (variant shapes of the same sign) by flagging si
 with near-identical contextual distributions (low Jensen–Shannon divergence): 89 signs,
 1,792 same-type pairs, candidates like `AB06`/`AB77` (JSD 0.234).
 
-**It does not survive its own control.** The correlation between a pair's JSD and the
-signs' minimum frequency is **−0.76**: low-JSD ("looks like an allograph") tracks high
-frequency, not genuine distributional identity. Frequent signs share generic contexts;
-rare signs have noisy distributions. The "allograph" candidates are a **frequency artefact**,
-so we report the method as inconclusive rather than publish the candidate list. (The fix
-would be a frequency-matched null per pair — future work.) Reported here because a method
-that fails its control is part of the honest record, same as
-[Phaistos](NEGATIVE_phaistos.md).
+It does not survive its own control: the correlation between a pair's JSD and the signs'
+minimum frequency is −0.76, so low JSD ("looks like an allograph") tracks high frequency
+rather than genuine distributional identity. Frequent signs share generic contexts; rare
+signs have noisy distributions. The candidates are a frequency artefact, so the method is
+reported as inconclusive rather than as a candidate list. A frequency-matched null per pair
+would be the fix.
+
+A separate visual-clustering attempt (k-means on sign-crop embeddings, silhouette-selected)
+splits only 1 of 91 sign classes — so neither the distributional nor the visual route finds
+robust allographs in the current data.
 
 ## Reproduce
 

@@ -1,10 +1,8 @@
 # Sign restoration — predicting a missing sign from context
 
-**Register: extends — with an honest LA floor.** Mask one sign in a sequence and predict
-it from its neighbours. This is the task that matters for damaged tablets, and it asks a
-sharper question than classification: *how much does sign context constrain what comes
-next?* The answer is "a lot for Linear B, very little for Linear A" — and that gap is
-itself a finding.
+Mask one sign in a sequence and predict it from its neighbours — the task relevant to
+damaged tablets, and a measure of how much sign context constrains what comes next. Context
+constrains the missing sign substantially in Linear B and very little in Linear A.
 
 ## Setup
 
@@ -24,15 +22,14 @@ itself a finding.
 | n-gram (4) | 24.6% | 44.0% | 53.3% | — | 101.2 |
 | **Transformer (3-layer)** | **25.5%** | **45.2%** | **55.7%** | 46.5 | — |
 
-Context predicts the missing LB sign at **~25% top-1 / ~45% top-5** — against a 0.08%
-random floor, mean rank ~7 out of 1,264. The structure is strongly there.
+Context predicts the missing LB sign at ~25% top-1 / ~45% top-5, against a 0.08% random
+floor (mean rank ~7 of 1,264).
 
-**The neural model barely beats the 4-gram (25.5% vs 24.6% top-1), and is worse in the
-tail.** Its mean rank (46.5) is far worse than the trigram's (6.9): the Transformer wins at
-the very top but, when wrong, is *very* wrong, while the n-gram backs off gracefully. At
-this corpus size (≈59k training tokens) the deep model has no real edge — the honest
-reading is that **classical n-grams are competitive**, and we say so rather than headline
-the Transformer.
+The Transformer barely beats the 4-gram (25.5% vs 24.6% top-1) and is worse in the tail: its
+mean rank (46.5) is far higher than the trigram's (6.9) — it wins at the very top but, when
+wrong, is wrong by a large margin, while the n-gram backs off gracefully. At this corpus size
+(≈59k training tokens) the deep model has no real advantage; classical n-grams are
+competitive.
 
 ## Result — Linear A (836 test positions, vocab 337)
 
@@ -40,12 +37,10 @@ the Transformer.
 |---|---|---|---|
 | Transformer (3-layer) | **4.4%** | 16.6% | 27.6% |
 
-**LA restoration is near the floor.** 4.4% top-1 is above chance (0.3%) but far below LB's
-25% — the LA corpus is an order of magnitude smaller and its sequences are looser
-(consistent with the [distributional result](distributional_structure.md): LA carries the
-least sequential structure of the three scripts). This is reported as an **honest negative
-for LA**: contextual restoration is not yet a useful tool there, and more LA data is the
-only fix.
+LA restoration is near the floor: 4.4% top-1 is above chance (0.3%) but far below LB's 25%.
+The LA corpus is an order of magnitude smaller and its sequences are looser (consistent with
+the [corpus-structure result](distributional_structure.md)). Contextual restoration is not a
+useful tool for LA at the current corpus size.
 
 ## Companion: contextual parallels (qualitative)
 

@@ -1,10 +1,9 @@
-# Scribal hands — the embedding agrees with expert palaeography (Pylos + Knossos, LB + LA)
+# Scribal hands (Pylos + Knossos, LB + LA)
 
-**Register: matches.** Given only sign-crop *shapes*, the LB classifier's embedding groups
-Pylos tablets by **who wrote them** in a way that correlates with Emmett Bennett /
-Skelton's hand attributions — established by eye, decades before any vision model. This is
-the cleanest "AI matches the experts" result in the repo: it is anchored to an **external**
-palaeographic coding (not the model's own labels), so leakage is not even in play.
+Given only sign-crop shapes, the classifier embedding groups tablets by who wrote them, in
+agreement with catalogued hand attributions (Bennett / Skelton). The anchor is an external
+palaeographic coding, not the model's own labels, so the result does not depend on the
+classifier's training labels.
 
 ## Setup
 
@@ -66,14 +65,6 @@ as marginal, not as a second LB win.
   full-data model's edge shows up on the oracle (memorisation) and Pylos Mantel, not here.
 - **Reproduces the prior internal estimate** (an earlier unpublished checkpoint gave Pylos
   r = 0.674 and LA Knossos top-1 ≈ 45%) — the published-weights runs land in the same band.
-
-## Why it clears the [rigor gate](../METHODOLOGY.md)
-
-Anchored to a *published, external* coding (not the model's labels); significance from a
-permutation null, not a bare correlation; n and effect size stated openly; scope limited to
-what the data supports (Pylos, 8 hands). The agreement with Skelton is the kind of
-independent corroboration that makes the [cross-script result](cross_script_cognates.md)
-credible too — same discipline, different anchor.
 
 ## Reproduce
 

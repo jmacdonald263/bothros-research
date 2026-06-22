@@ -1,55 +1,48 @@
 # bothros-research
 
-Exploratory findings from the [BOTHROS](https://github.com/jmacdonald263/bothros)
-Aegean sign-reading pipeline — *what a vision model recovers from Linear A / Linear B
-sign shapes that isn't obvious by eye.* Companion to the tool repo
-([github.com/jmacdonald263/bothros](https://github.com/jmacdonald263/bothros)); weights on
+Exploratory analyses built on the [BOTHROS](https://github.com/jmacdonald263/bothros)
+Aegean sign-reading pipeline — structure in Linear A and Linear B sign data recovered by a
+vision model and by corpus statistics. Companion to the tool repo; weights on
 [Hugging Face](https://huggingface.co/JMacD263/linear-a-linear-b-bothros), live
-[demo Space](https://huggingface.co/spaces/JMacD263/bothros-demo), archived on
+[demo](https://huggingface.co/spaces/JMacD263/bothros-demo), archived on
 [Zenodo](https://doi.org/10.5281/zenodo.20746759).
 
-> **Research preview.** These are honest experiments, not decipherment. Every claim
-> here clears the [rigor gate](METHODOLOGY.md) — anchored to published ground truth
-> with significance tests — or it doesn't ship. The retracted Phaistos result is kept
-> as a worked example of how this can go wrong.
-
-## Three registers (read all three — the third is what makes the rest trustworthy)
-
-1. **AI matches experts** *(validation).* Unsupervised structure from sign shapes that
-   agrees with established scholarship — e.g. scribal-hand clusters vs Skelton's
-   palaeography; the secure Linear A ↔ Linear B sign correspondences recovered by
-   visual similarity alone.
-2. **AI extends** *(discovery — candidate-only).* Structure the model proposes *beyond*
-   the secure set (e.g. candidate LA↔LB correspondences), offered for human review and
-   pre-declared as candidate, never as confirmation.
-3. **AI fails / confounds** *(honesty).* The Phaistos-placement result, retracted because
-   cross-script proximity was confounded by per-script rendering style. Featured, with
-   the diagnostic — see [`findings/NEGATIVE_phaistos.md`](findings/NEGATIVE_phaistos.md).
+These are experiments, not decipherment. Each finding states its ground truth, baseline,
+and significance test, and reports results that weaken or fail as readily as those that
+hold.
 
 ## Findings
 
-See [`findings/`](findings/) (index: [`findings/_INDEX.md`](findings/_INDEX.md)). Each
-finding ships its reproduction script/notebook and a stated null + significance test.
+See [`findings/`](findings/) — index and per-theme results in
+[`findings/_INDEX.md`](findings/_INDEX.md). Each page carries its reproduction command and
+a stated null / significance test. Themes:
 
-## Reproducibility
+- Linear A ↔ Linear B sign correspondences from visual similarity, scored against published
+  correspondence tiers.
+- Scribal-hand structure vs. catalogued hand attributions (Pylos Mantel; Knossos hand-ID).
+- Sign-function classification (logogram vs. syllabogram) from distributional features.
+- Corpus structure: conditional entropy, Heaps/Zipf inventory growth, sign-adjacency
+  networks, topic models, with a matched-corpus-size control.
+- Sign restoration (n-gram and Transformer) and classifier gold-crop accuracy.
 
-Model-dependent findings are run on **both published BOTHROS weight sets on Hugging Face**
-and report the delta: the **full-data release** (`*_release.pth`, featured — the model a
-user actually downloads) and the **held-out-safe benchmark** (`*_classifier.pth`). Sign
-embeddings are the penultimate-layer activations of those classifiers. The two columns
-answer different questions — the release number is the deployed model's performance
-(inflated to an *in-domain ceiling* on the oracle, since the test crops are in its training
-set), and the benchmark number is the honest held-out generalisation estimate. A recurring
-result: **"most data" wins some tasks and loses others** (it beats benchmark on the Pylos
-scribal Mantel and the in-domain oracle, but is marginally *worse* on cross-script cognates
-and Knossos hand-ID). The **model-free** findings (entropy / Heaps / sign-network / topics /
-restoration) read only the sign sequences — no classifier — and are leakage-immune by
-construction. See [`METHODOLOGY.md`](METHODOLOGY.md).
+## Method and weights
+
+Model-dependent findings are run on both published weight sets and report the difference:
+the full-data **release** classifiers (`*_release.pth`, the downloadable model) and the
+held-out-safe **benchmark** classifiers (`*_classifier.pth`). They answer different
+questions — the release figure is the deployed model's accuracy (an in-domain ceiling on
+the gold-crop oracle, whose test crops are in its training set), the benchmark figure is the
+held-out estimate. More training data helps some tasks (scribal Pylos, in-domain oracle) and
+not others (cross-script, Knossos hand-ID); results are reported as measured. Model-free
+findings (entropy, Heaps, networks, topics, restoration) read only sign sequences.
+
+Cross-script claims are scored against published correspondence pairs (precision@K), not raw
+embedding proximity: nearest-neighbour distance across scripts is confounded by per-script
+drawing style, so an anchored metric is used throughout. See [`METHODOLOGY.md`](METHODOLOGY.md).
 
 ## Licence
 
 - **Code / notebooks:** MIT.
-- **Derived data** (GT correspondence tables, hand labels, embedding-derived tables):
-  CC BY-NC-SA 4.0 — derived from DĀMOS, SigLA, lineara.xyz, LinearBExplorer, GORILA
-  (research-only). **No copyrighted corpus images** are included; reproductions fetch
-  tablet images from those sources.
+- **Derived data** (correspondence tables, hand labels, derived statistics): CC BY-NC-SA 4.0,
+  derived from DĀMOS, SigLA, lineara.xyz, LinearBExplorer, GORILA (research use). No
+  copyrighted corpus images are included; reproductions fetch images from those sources.
